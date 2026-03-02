@@ -1,0 +1,38 @@
+name: ESCAPEMobile
+
+options:
+  bundleIdPrefix: com.louissader
+  deploymentTarget:
+    iOS: "16.0"
+  generateEmptyDirectories: true
+  defaultConfig: Debug
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    DEVELOPMENT_TEAM: ""          # Set your Apple Team ID here before archiving
+
+targets:
+  ESCAPEMobile:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: Sources
+        type: group
+    resources:
+      - path: Resources/Assets.xcassets
+      - path: Resources/Info.plist
+        buildPhase: none
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.louissader.ESCAPEMobile
+        INFOPLIST_FILE: Resources/Info.plist
+        TARGETED_DEVICE_FAMILY: "1,2"    # iPhone + iPad
+        CODE_SIGN_STYLE: Automatic
+    dependencies:
+      - sdk: SpriteKit.framework
+      - sdk: GameplayKit.framework
+      - sdk: AVFoundation.framework
