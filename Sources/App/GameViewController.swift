@@ -3,22 +3,29 @@ import SpriteKit
 
 class GameViewController: UIViewController {
 
-    // Create the view as an SKView from code — no storyboard needed
+    // Create the SKView programmatically — no storyboard needed
     override func loadView() {
-        self.view = SKView(frame: UIScreen.main.bounds)
+        let skView = SKView()
+        skView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.view = skView
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         let skView = view as! SKView
-
+        skView.ignoresSiblingOrder = true
         #if DEBUG
         skView.showsFPS = true
         skView.showsNodeCount = true
         #endif
+    }
 
-        skView.ignoresSiblingOrder = true
-
+    // Present the scene AFTER layout so bounds reflect the final landscape size.
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let skView = view as! SKView
+        // Only present once — viewDidLayoutSubviews is called multiple times.
+        guard skView.scene == nil else { return }
         let scene = MenuScene(size: skView.bounds.size)
         scene.scaleMode = .resizeFill
         skView.presentScene(scene)
