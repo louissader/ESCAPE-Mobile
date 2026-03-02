@@ -3,11 +3,15 @@ import SpriteKit
 
 class GameViewController: UIViewController {
 
+    // Create the view as an SKView from code — no storyboard needed
+    override func loadView() {
+        self.view = SKView(frame: UIScreen.main.bounds)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let skView = view as? SKView else { return }
+        let skView = view as! SKView
 
-        // Debug helpers (disable for App Store release)
         #if DEBUG
         skView.showsFPS = true
         skView.showsNodeCount = true

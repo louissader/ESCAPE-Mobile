@@ -40,9 +40,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UIMainStoryboardFile</key>
-	<string></string>
-	<key>NSPrincipalClass</key>
-	<string>AppDelegate</string>
 </dict>
 </plist>
