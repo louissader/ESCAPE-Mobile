@@ -2,7 +2,7 @@ import SpriteKit
 
 class FireballNode: SKSpriteNode {
 
-    private let speed: CGFloat = 380
+    private let moveSpeed: CGFloat = 380
     private let lifetime: TimeInterval = 4.0
     let firedByPlayer: Bool
 
@@ -48,7 +48,7 @@ class FireballNode: SKSpriteNode {
     }
 
     func launch(direction: CGFloat) {
-        physicsBody?.velocity = CGVector(dx: direction * speed, dy: 0)
+        physicsBody?.velocity = CGVector(dx: direction * moveSpeed, dy: 0)
     }
 
     private func scheduleDestroy() {

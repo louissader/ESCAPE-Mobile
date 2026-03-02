@@ -52,7 +52,9 @@ class PlayerNode: SKSpriteNode {
     func move(direction: CGFloat) {
         guard !disableControls, !isDead else { return }
         let vx = direction * moveSpeed
-        physicsBody?.velocity.x = vx
+        if let body = physicsBody {
+            body.velocity = CGVector(dx: vx, dy: body.velocity.dy)
+        }
 
         if direction != 0 {
             isFacingRight = direction > 0
@@ -63,11 +65,15 @@ class PlayerNode: SKSpriteNode {
     func jump() {
         guard !disableControls, !isDead else { return }
         if isGrounded {
-            physicsBody?.velocity.dy = 0
+            if let body = physicsBody {
+                body.velocity = CGVector(dx: body.velocity.dx, dy: 0)
+            }
             physicsBody?.applyImpulse(CGVector(dx: 0, dy: jumpImpulse))
             didDoubleJump = false
         } else if canDoubleJump && !didDoubleJump {
-            physicsBody?.velocity.dy = 0
+            if let body = physicsBody {
+                body.velocity = CGVector(dx: body.velocity.dx, dy: 0)
+            }
             physicsBody?.applyImpulse(CGVector(dx: 0, dy: doubleJumpImpulse))
             didDoubleJump = true
         }
