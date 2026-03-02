@@ -12,13 +12,18 @@
 		0E14651414D47C794C2AC1F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DD75D3E4D6F1FFA31289D3 /* AppDelegate.swift */; };
 		10AAAE7135D84D2BEFC50F15 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929E3603374A6E8A0184C523 /* GameScene.swift */; };
 		1A7C47F89797876DA2CC552E /* GameProgressManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE08FD4A6EBDA1174ABCE29 /* GameProgressManager.swift */; };
+		2E140C8D02129BF25E1C118C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2116F33A912949EAA93A20BA /* Assets.xcassets */; };
 		3A7DD4F43858469E0F862241 /* PhysicsCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299127712B5FB5762987ABEE /* PhysicsCategories.swift */; };
+		403D417FB2F4DD3E99C80ABB /* Ghost.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 3EE40304B46F1995A03AE223 /* Ghost.atlas */; };
+		42A41CA55C786AF3BE3F2D50 /* Items.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 1C91F8634950FEEE2B490470 /* Items.atlas */; };
 		471AD2CC9AE942789AB5017D /* PlayerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1BD0EA1DEBCB7E71CC1621 /* PlayerNode.swift */; };
 		510992643CDFC500ED659A83 /* Player2Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB5E43CA7D4521C30A7809E /* Player2Node.swift */; };
 		52364339A2839BABC21C8947 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A885BF45BE2C7C8D50BFBECE /* MenuScene.swift */; };
 		53719B02432B2CB391291AF3 /* LeverNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64DB159E82CBF89186F8F0B /* LeverNode.swift */; };
 		64952E4062242BD016B3C555 /* BridgeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9867A4FBB2D41F899F51E4 /* BridgeNode.swift */; };
 		67760AD2B9C51B3A8C9DA942 /* GameplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 173F0E34638F14A1C7F36084 /* GameplayKit.framework */; };
+		831821BB854F0E4A45E506FE /* Player.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 0B8461E0A6F0E864311D089F /* Player.atlas */; };
+		8BFE7A77E802DB31169B3CDD /* Bat.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 3DD69CA34AF64452DA37AFB9 /* Bat.atlas */; };
 		932874820D954F39448FC63F /* TouchControlsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B01EBFF425A0E63C62875E4 /* TouchControlsNode.swift */; };
 		A4354EDF7F3BECA857B0BED5 /* LevelSelectScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C81299D959D1D3B3DF49260 /* LevelSelectScene.swift */; };
 		B75893CC677865EFC1D37FC3 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D345915AB4E33DD2BC1895CC /* SpriteKit.framework */; };
@@ -31,11 +36,16 @@
 
 /* Begin PBXFileReference section */
 		0300A394BCEE6DB4F3EDEC84 /* LevelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelData.swift; sourceTree = "<group>"; };
+		0B8461E0A6F0E864311D089F /* Player.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Player.atlas; sourceTree = "<group>"; };
 		0F171A59728ECB102B821D0D /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		14069DCECA31E1D4E9501412 /* ESCAPEMobile.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ESCAPEMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		173F0E34638F14A1C7F36084 /* GameplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameplayKit.framework; path = System/Library/Frameworks/GameplayKit.framework; sourceTree = SDKROOT; };
+		1C91F8634950FEEE2B490470 /* Items.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Items.atlas; sourceTree = "<group>"; };
+		2116F33A912949EAA93A20BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		299127712B5FB5762987ABEE /* PhysicsCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsCategories.swift; sourceTree = "<group>"; };
 		3CE08FD4A6EBDA1174ABCE29 /* GameProgressManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameProgressManager.swift; sourceTree = "<group>"; };
+		3DD69CA34AF64452DA37AFB9 /* Bat.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Bat.atlas; sourceTree = "<group>"; };
+		3EE40304B46F1995A03AE223 /* Ghost.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Ghost.atlas; sourceTree = "<group>"; };
 		4D441BA2DCC1C850FA91108C /* GameHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameHUD.swift; sourceTree = "<group>"; };
 		5A312B17EAE6D2224DF72118 /* FireballNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireballNode.swift; sourceTree = "<group>"; };
 		5B01EBFF425A0E63C62875E4 /* TouchControlsNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchControlsNode.swift; sourceTree = "<group>"; };
@@ -67,6 +77,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C1F3D8C53DF3FB584E06442 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2116F33A912949EAA93A20BA /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		0CBD4E8BE7BE0D96C08467E1 /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -110,6 +128,18 @@
 				299127712B5FB5762987ABEE /* PhysicsCategories.swift */,
 			);
 			path = Physics;
+			sourceTree = "<group>";
+		};
+		8B130A499B2834B34F372694 /* Sprites */ = {
+			isa = PBXGroup;
+			children = (
+				3DD69CA34AF64452DA37AFB9 /* Bat.atlas */,
+				3EE40304B46F1995A03AE223 /* Ghost.atlas */,
+				1C91F8634950FEEE2B490470 /* Items.atlas */,
+				0B8461E0A6F0E864311D089F /* Player.atlas */,
+			);
+			name = Sprites;
+			path = Resources/Sprites;
 			sourceTree = "<group>";
 		};
 		8D669AB219C7BD89CF1EC2D3 /* Systems */ = {
@@ -160,7 +190,9 @@
 		F0EF19AE5A3312FDF3DD4E4A = {
 			isa = PBXGroup;
 			children = (
+				0C1F3D8C53DF3FB584E06442 /* Resources */,
 				C268A2872082EC535F4E9689 /* Sources */,
+				8B130A499B2834B34F372694 /* Sprites */,
 				349F77434D59107236D51EE7 /* Frameworks */,
 				7E6622EF965BCB3B2EFF2C52 /* Products */,
 			);
@@ -174,6 +206,7 @@
 			buildConfigurationList = 33E86A251B990D559D71A271 /* Build configuration list for PBXNativeTarget "ESCAPEMobile" */;
 			buildPhases = (
 				486B2BFF8EE4C946320EF0A9 /* Sources */,
+				D70BF1534E118F83985B7FD7 /* Resources */,
 				6671FA602F187E99299BB224 /* Frameworks */,
 			);
 			buildRules = (
@@ -220,6 +253,21 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D70BF1534E118F83985B7FD7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E140C8D02129BF25E1C118C /* Assets.xcassets in Resources */,
+				8BFE7A77E802DB31169B3CDD /* Bat.atlas in Resources */,
+				403D417FB2F4DD3E99C80ABB /* Ghost.atlas in Resources */,
+				42A41CA55C786AF3BE3F2D50 /* Items.atlas in Resources */,
+				831821BB854F0E4A45E506FE /* Player.atlas in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		486B2BFF8EE4C946320EF0A9 /* Sources */ = {
