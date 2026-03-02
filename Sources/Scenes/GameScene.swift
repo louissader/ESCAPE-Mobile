@@ -94,7 +94,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player1 = Player1Node()
         player1.position = config.player1Start
         player1.setSpawnPosition(config.player1Start)
-        player1.gameScene = self
         addChild(player1)
 
         player2 = Player2Node()
@@ -179,8 +178,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     private func addGhost(at position: CGPoint) {
-        let ghost = SKSpriteNode(color: UIColor(white: 0.85, alpha: 0.7),
-                                 size: CGSize(width: 22, height: 28))
+        let ghostAtlas = SKTextureAtlas(named: "Ghost")
+        let firstFrame = ghostAtlas.textureNamed("ghost-fly-01")
+        firstFrame.filteringMode = .nearest
+        let ghost = SKSpriteNode(texture: firstFrame, color: .clear,
+                                 size: CGSize(width: 28, height: 32))
+        // Animate ghost float cycle
+        let frames = ["ghost-fly-01", "ghost-fly-02", "ghost-fly-03"].map { n -> SKTexture in
+            let t = ghostAtlas.textureNamed(n); t.filteringMode = .nearest; return t
+        }
+        ghost.run(SKAction.repeatForever(SKAction.animate(with: frames, timePerFrame: 0.15)))
         ghost.position = position
         ghost.name = "ghost"
         ghost.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 22, height: 28))
@@ -200,10 +207,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     private func addPowerUp(at data: PowerUpData) {
-        let star = SKShapeNode(circleOfRadius: 10)
-        star.fillColor = .yellow
-        star.strokeColor = .orange
-        star.lineWidth = 2
+        let itemAtlas = SKTextureAtlas(named: "Items")
+        let frames = ["power-up-01", "power-up-02", "power-up-03"].map { n -> SKTexture in
+            let t = itemAtlas.textureNamed(n); t.filteringMode = .nearest; return t
+        }
+        let star = SKSpriteNode(texture: frames[0], color: .clear, size: CGSize(width: 24, height: 24))
+        star.run(SKAction.repeatForever(SKAction.animate(with: frames, timePerFrame: 0.15)))
         star.position = data.position
         star.name = "powerup"
         star.physicsBody = SKPhysicsBody(circleOfRadius: 14)
@@ -212,8 +221,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         star.physicsBody?.categoryBitMask    = PhysicsCategory.none
         star.physicsBody?.contactTestBitMask = PhysicsCategory.player1
 
-        let spin = SKAction.rotate(byAngle: .pi * 2, duration: 1.0)
-        star.run(SKAction.repeatForever(spin))
         let bob = SKAction.sequence([
             SKAction.moveBy(x: 0, y: 6, duration: 0.5),
             SKAction.moveBy(x: 0, y: -6, duration: 0.5)
@@ -342,6 +349,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private func updatePlayers(delta: TimeInterval) {
         player1.update(deltaTime: delta)
         player2.update(deltaTime: delta)
+
+        let v1 = player1.physicsBody?.velocity.dx ?? 0
+        let v2 = player2.physicsBody?.velocity.dx ?? 0
+        player1.updateAnimation(velocityX: v1)
+        player2.updateAnimation(velocityX: v2)
     }
 
     private func updateCamera() {

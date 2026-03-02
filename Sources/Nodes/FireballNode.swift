@@ -6,16 +6,26 @@ class FireballNode: SKSpriteNode {
     private let lifetime: TimeInterval = 4.0
     let firedByPlayer: Bool
 
+    private static let itemAtlas = SKTextureAtlas(named: "Items")
+
     init(firedByPlayer: Bool) {
         self.firedByPlayer = firedByPlayer
-        let size = CGSize(width: 12, height: 12)
-        let color: UIColor = firedByPlayer
-            ? UIColor(red: 1.0, green: 0.6, blue: 0.1, alpha: 1)   // orange — player fireball
-            : UIColor(red: 1.0, green: 0.2, blue: 0.2, alpha: 1)   // red   — enemy fireball
-        super.init(texture: nil, color: color, size: size)
+
+        let frameName = firedByPlayer ? "fire-01" : "fire-01"
+        let tex = FireballNode.itemAtlas.textureNamed(frameName)
+        tex.filteringMode = .nearest
+
+        super.init(texture: tex, color: .clear, size: CGSize(width: 16, height: 16))
         name = firedByPlayer ? "playerFireball" : "enemyFireball"
+
+        // Tint enemy fireballs red
+        if !firedByPlayer {
+            color = UIColor(red: 1, green: 0.2, blue: 0.2, alpha: 1)
+            colorBlendFactor = 0.5
+        }
+
         setupPhysics(firedByPlayer: firedByPlayer)
-        addGlow()
+        startFlameAnimation()
         scheduleDestroy()
     }
 
@@ -26,29 +36,28 @@ class FireballNode: SKSpriteNode {
         physicsBody?.affectedByGravity = false
         physicsBody?.allowsRotation = false
         physicsBody?.linearDamping = 0
-
+        physicsBody?.categoryBitMask    = PhysicsCategory.fireball
         if firedByPlayer {
-            physicsBody?.categoryBitMask    = PhysicsCategory.fireball
             physicsBody?.contactTestBitMask = PhysicsCategory.enemy
-            physicsBody?.collisionBitMask   = PhysicsCategory.none
         } else {
-            // Enemy projectile hits players
-            physicsBody?.categoryBitMask    = PhysicsCategory.fireball
             physicsBody?.contactTestBitMask = PhysicsCategory.player1 | PhysicsCategory.player2
-            physicsBody?.collisionBitMask   = PhysicsCategory.none
         }
+        physicsBody?.collisionBitMask = PhysicsCategory.none
     }
 
-    private func addGlow() {
-        let core = SKShapeNode(circleOfRadius: 4)
-        core.fillColor = .white
-        core.strokeColor = .clear
-        core.alpha = 0.8
-        addChild(core)
+    private func startFlameAnimation() {
+        let frames = ["fire-01", "fire-02", "fire-03"].map { name -> SKTexture in
+            let t = FireballNode.itemAtlas.textureNamed(name)
+            t.filteringMode = .nearest
+            return t
+        }
+        let anim = SKAction.animate(with: frames, timePerFrame: 0.08)
+        run(SKAction.repeatForever(anim), withKey: "flame")
     }
 
     func launch(direction: CGFloat) {
         physicsBody?.velocity = CGVector(dx: direction * moveSpeed, dy: 0)
+        xScale = direction < 0 ? -abs(xScale) : abs(xScale)
     }
 
     private func scheduleDestroy() {
@@ -59,12 +68,11 @@ class FireballNode: SKSpriteNode {
     }
 
     func hit() {
-        // Burst particle-like flash before removing
-        let flash = SKAction.sequence([
+        removeAllActions()
+        run(SKAction.sequence([
             SKAction.scale(to: 2.0, duration: 0.05),
             SKAction.fadeOut(withDuration: 0.08),
             SKAction.removeFromParent()
-        ])
-        run(flash)
+        ]))
     }
 }

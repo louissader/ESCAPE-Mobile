@@ -1,7 +1,5 @@
 import SpriteKit
 
-/// Player 1 — The Shooter.
-/// Translates Unity's PlayerCharacterOne: movement, double-jump, fireball shooting.
 class Player1Node: PlayerNode {
 
     // MARK: - Shooting
@@ -9,20 +7,46 @@ class Player1Node: PlayerNode {
     var shootCooldown: TimeInterval = 0
     private let shootCooldownDuration: TimeInterval = 0.35
 
-    weak var gameScene: SKScene?
+    // MARK: - Textures
+    private let atlas = SKTextureAtlas(named: "Player")
+    private var idleTexture: SKTexture!
+    private var walkFrames: [SKTexture] = []
+    private var jumpTexture: SKTexture!
+    private var deadTexture: SKTexture!
+    private var shootTexture: SKTexture!
 
-    // Visual indicator for shoot ability
-    private var powerUpGlow: SKShapeNode?
+    private var currentAnim = ""
 
     init() {
-        super.init(color: UIColor(red: 0.9, green: 0.4, blue: 0.1, alpha: 1), // orange
-                   size: CGSize(width: 28, height: 38))
+        super.init(color: .clear, size: CGSize(width: 32, height: 32))
         name = "player1"
+        setupTextures()
         setupPhysicsCategories()
-        addFace()
+        playIdle()
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError() }
+
+    // MARK: - Textures setup
+
+    private func setupTextures() {
+        // Pixel art — use .nearest to keep crisp edges
+        func crisp(_ name: String) -> SKTexture {
+            let t = atlas.textureNamed(name)
+            t.filteringMode = .nearest
+            return t
+        }
+
+        idleTexture  = crisp("idle")
+        jumpTexture  = crisp("jump")
+        deadTexture  = crisp("dead")
+        shootTexture = crisp("shoot")
+        walkFrames   = ["walk_01", "walk_02", "walk_03"].map { crisp($0) }
+
+        texture = idleTexture
+        color   = .clear       // clear color so texture shows through
+        colorBlendFactor = 0
+    }
 
     private func setupPhysicsCategories() {
         physicsBody?.categoryBitMask    = PhysicsCategory.player1
@@ -36,38 +60,72 @@ class Player1Node: PlayerNode {
                                           PhysicsCategory.platform2
     }
 
-    private func addFace() {
-        // Simple dot-eyes to make the character recognizable
-        let eyeL = SKShapeNode(circleOfRadius: 3)
-        eyeL.fillColor = .white; eyeL.strokeColor = .clear
-        eyeL.position = CGPoint(x: -6, y: 8)
-        addChild(eyeL)
+    // MARK: - Animations
 
-        let eyeR = SKShapeNode(circleOfRadius: 3)
-        eyeR.fillColor = .white; eyeR.strokeColor = .clear
-        eyeR.position = CGPoint(x: 6, y: 8)
-        addChild(eyeR)
+    func updateAnimation(velocityX: CGFloat) {
+        if isDead {
+            playDead(); return
+        }
+        if !isGrounded {
+            playJump(); return
+        }
+        if abs(velocityX) > 10 {
+            playWalk()
+        } else {
+            playIdle()
+        }
+    }
+
+    private func playIdle() {
+        guard currentAnim != "idle" else { return }
+        currentAnim = "idle"
+        removeAction(forKey: "anim")
+        texture = idleTexture
+    }
+
+    private func playWalk() {
+        guard currentAnim != "walk" else { return }
+        currentAnim = "walk"
+        removeAction(forKey: "anim")
+        let anim = SKAction.animate(with: walkFrames, timePerFrame: 0.12)
+        run(SKAction.repeatForever(anim), withKey: "anim")
+    }
+
+    private func playJump() {
+        guard currentAnim != "jump" else { return }
+        currentAnim = "jump"
+        removeAction(forKey: "anim")
+        texture = jumpTexture
+    }
+
+    private func playDead() {
+        guard currentAnim != "dead" else { return }
+        currentAnim = "dead"
+        removeAction(forKey: "anim")
+        texture = deadTexture
+    }
+
+    private func playShootAnim() {
+        texture = shootTexture
+        let restore = SKAction.sequence([
+            SKAction.wait(forDuration: 0.12),
+            SKAction.run { [weak self] in
+                self?.currentAnim = ""   // allow next updateAnimation to re-pick
+            }
+        ])
+        run(restore, withKey: "shootAnim")
     }
 
     // MARK: - Power-up
 
     func collectPowerUp() {
         canShoot = true
-        // Visual glow
-        let glow = SKShapeNode(rectOf: CGSize(width: size.width + 8, height: size.height + 8), cornerRadius: 4)
-        glow.strokeColor = .yellow
-        glow.lineWidth = 2
-        glow.fillColor = .clear
-        glow.alpha = 0.7
-        glow.name = "powerGlow"
-        addChild(glow)
-        powerUpGlow = glow
-
-        let pulse = SKAction.sequence([
-            SKAction.fadeAlpha(to: 0.3, duration: 0.5),
-            SKAction.fadeAlpha(to: 0.8, duration: 0.5)
+        // Tint flash to signal power-up collected
+        let flash = SKAction.sequence([
+            SKAction.colorize(with: .yellow, colorBlendFactor: 0.6, duration: 0.1),
+            SKAction.colorize(with: .clear, colorBlendFactor: 0, duration: 0.3)
         ])
-        glow.run(SKAction.repeatForever(pulse))
+        run(flash)
     }
 
     // MARK: - Shoot
@@ -75,13 +133,14 @@ class Player1Node: PlayerNode {
     func tryShoot(currentTime: TimeInterval) {
         guard canShoot, !isDead, currentTime > shootCooldown else { return }
         shootCooldown = currentTime + shootCooldownDuration
+        playShootAnim()
         shoot()
     }
 
     private func shoot() {
         let fireball = FireballNode(firedByPlayer: true)
         let xOffset: CGFloat = isFacingRight ? (size.width / 2 + 8) : -(size.width / 2 + 8)
-        fireball.position = CGPoint(x: position.x + xOffset, y: position.y + 5)
+        fireball.position = CGPoint(x: position.x + xOffset, y: position.y + 2)
         fireball.launch(direction: isFacingRight ? 1 : -1)
         parent?.addChild(fireball)
     }

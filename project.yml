@@ -26,6 +26,10 @@ targets:
       - path: Resources/Assets.xcassets
       - path: Resources/Info.plist
         buildPhase: none
+      - path: Resources/Sprites/Player.atlas
+      - path: Resources/Sprites/Bat.atlas
+      - path: Resources/Sprites/Ghost.atlas
+      - path: Resources/Sprites/Items.atlas
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.louissader.ESCAPEMobile
