@@ -39,6 +39,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // MARK: - Scene lifecycle
 
     override func didMove(to view: SKView) {
+        anchorPoint = CGPoint(x: 0.5, y: 0.5)
         setupPhysics()
         buildLevel()
         buildCamera()

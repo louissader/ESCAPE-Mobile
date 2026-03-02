@@ -3,6 +3,7 @@ import SpriteKit
 class LevelSelectScene: SKScene {
 
     override func didMove(to view: SKView) {
+        anchorPoint = CGPoint(x: 0.5, y: 0.5)
         backgroundColor = UIColor(red: 0.06, green: 0.04, blue: 0.14, alpha: 1)
         buildUI()
     }
